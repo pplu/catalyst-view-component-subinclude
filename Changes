@@ -1,5 +1,7 @@
 Revision history for Catalyst-View-Component-SubInclude
 
+0.09  Thu 10 June 21:24:00 2010
+      - Add SSI support (Vladimir Timofeev)
       - Additional documentation.
 
 0.08  Sun 16 May 15:52:00 2010

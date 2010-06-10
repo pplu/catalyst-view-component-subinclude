@@ -8,11 +8,11 @@ Catalyst::View::Component::SubInclude::SSI - Server Side Includes (SSI) plugin f
 
 =head1 VERSION
 
-Version 0.08
+Version 0.09
 
 =cut
 
-our $VERSION = '0.08';
+our $VERSION = '0.09';
 $VERSION = eval $VERSION;
 
 =head1 SYNOPSIS

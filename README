@@ -3,7 +3,7 @@ NAME
     views
 
 VERSION
-    Version 0.08
+    Version 0.09
 
 SYNOPSIS
       package MyApp::View::TT;
@@ -31,7 +31,10 @@ DESCRIPTION
     It's built in an extensible way so that you're free to use sub-requests,
     Varnish ESI (<http://www.catalystframework.org/calendar/2008/17>) or any
     other sub-include plugin you might want to implement. An LWP plugin
-    seems useful and might be developed in the future.
+    seems useful and might be developed in the future. If you need to
+    address a resource by it's public path (i.e. the path part trailing
+    "http://example.com/myapp" then you will need to use
+    Catalyst::Plugin::SubRequest directly, and not this component.
 
 STASH FUNCTIONS
     This component does its magic by exporting a "subinclude" coderef entry
