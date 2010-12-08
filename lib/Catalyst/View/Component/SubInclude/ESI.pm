@@ -38,7 +38,7 @@ Edge Side Includes (ESI) include directives. This is a feature implemented by
 Varnish (L<http://varnish.projects.linpro.no/>) which allows cache-efficient 
 uses of includes.
 
-=head1 CLASS METHODS
+=head1 METHODS
 
 =head2 C<generate_subinclude( $c, $path, @args )>
 
