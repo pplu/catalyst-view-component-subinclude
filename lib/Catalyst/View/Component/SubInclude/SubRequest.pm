@@ -51,7 +51,7 @@ to render the subinclude contents.
 
 It requires L<Catalyst::Plugin::SubRequest>.
 
-=head1 CLASS METHODS
+=head1 METHODS
 
 =head2 C<generate_subinclude( $c, $path, @args )>
 
