@@ -116,6 +116,12 @@ has 'subinclude_plugin' => (
     isa => Str,
 );
 
+has subinclude => (
+    is => 'ro',
+    isa => HashRef,
+    default => sub { {} },
+);
+
 around 'new' => sub {
     my $next = shift;
     my $class = shift;
@@ -168,8 +174,8 @@ sub _subinclude_plugin_class_instance {
     return $cache->{$plugin} if exists $cache->{$plugin};
 
     my $plugin_config = Catalyst::Utils::merge_hashes(
-        $self->config->{subinclude}->{ALL}||{},
-        $self->config->{subinclude}->{$plugin}||{}
+        $self->subinclude->{ALL}||{},
+        $self->subinclude->{$plugin}||{}
     );
 
     Class::MOP::load_class($class);
