@@ -14,6 +14,9 @@ requires 'Moose::Role';
 requires 'MooseX::Types';
 requires 'Carp';
 requires 'namespace::clean';
+requires 'LWP::UserAgent';
+requires 'List::MoreUtils';
+requires 'URI';
 
 test_requires 'Test::More' => '0.88';
 test_requires 'Catalyst::View::TT';
