@@ -9,12 +9,12 @@ use URI;
 our $VERSION = '0.01';
 $VERSION = eval $VERSION;
 
-has ua_timeout => (
-    isa => 'Int', is => 'ro', default => 60,
+has http_method => (
+    isa => 'Str', is => 'ro', default => 'GET',
 );
 
-has http_method => (
-    isa => 'Str', is => 'ro', required => 1,
+has ua_timeout => (
+    isa => 'Int', is => 'ro', default => 10,
 );
 
 has base_uri => (
@@ -95,10 +95,23 @@ In your view class:
     with 'Catalyst::View::Component::SubInclude';
 
     __PACKAGE__->config(
-        subinclude_plugin => 'HTTP',
+        subinclude_plugin => 'HTTP::GET',
         subinclude => {
-            HTTP => {
-                base_uri => 'http://www.foo.com/bar',
+            'HTTP::GET' => {
+                class => 'HTTP',
+                http_method => 'GET',
+                ua_timeout => '10',
+                uri_map => {
+                    '/my/' => 'http://localhost:5000/',
+                },
+            },
+            'HTTP::POST' => {
+                class => 'HTTP',
+                http_method => 'POST',
+                ua_timeout => '10',
+                uri_map => {
+                    '/foo/' => 'http://www.foo.com/',
+                },
             },
         },
     );
@@ -106,12 +119,53 @@ In your view class:
 Then, somewhere in your templates:
 
     [% subinclude('/my/widget') %]
+    ...
+    [% subinclude_using('HTTP::POST', '/foo/path', { foo => 1 }) %]
 
 =head1 DESCRIPTION
 
+C<Catalyst::View::Component::SubInclude::HTTP> does HTTP requests (currently
+using L<LWP::UserAgent>) and uses the responses to render subinclude contents.
+
+=head1 CONFIGURATION
+
+The configuration is passed in the C<subinclude> key based on your plugin name
+which can be arbitrary.
+
+=over
+
+=item class
+
+Required just in case your plugin name differs from C<HTTP>.
+
+=item http_method
+
+Accepts C<GET> and C<POST> as values. The default one is C<GET>.
+
+=item user_agent
+
+This lazily builds a L<LWP::UserAgent> obj, however you can pass a different
+user agent obj that implements the required API.
+
+=item ua_timeout
+
+User Agent's timeout config param. Defaults to 10 seconds.
+
+=item uri_map
+
+This expects a HashRef in order to map paths to different URLs.
+
+=item base_uri
+
+Used only if C<uri_map> is C<undef> and defaults to C<< $c->request->base >>.
+
+=back
+
 =head1 METHODS
 
-=head2 C<generate_subinclude( $c, $path, @params )>
+=head2 C<generate_subinclude( $c, $path, $args )>
+
+Note that C<$path> should be the relative path.
 
 =head1 SEE ALSO
 
