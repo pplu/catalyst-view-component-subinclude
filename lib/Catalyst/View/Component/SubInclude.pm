@@ -209,6 +209,8 @@ Nilson Santos Figueiredo Junior, C<< <nilsonsfj at cpan.org> >>
 
 Tomas Doran (t0m) C<< <bobtfish@bobtfish.net >>.
 
+Vladimir Timofeev, C<< <vovkasm at gmail.com> >>.
+
 Wallace Reis (wreis) C<< <wreis@cpan.org> >>.
 
 =head1 SPONSORSHIP
