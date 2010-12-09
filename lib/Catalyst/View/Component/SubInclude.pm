@@ -49,11 +49,7 @@ in your page.
 
 It's built in an extensible way so that you're free to use sub-requests,
 Varnish ESI (L<http://www.catalystframework.org/calendar/2008/17>) or any other
-sub-include plugin you might want to implement. An LWP plugin seems useful and
-might be developed in the future. If you need to address a resource by it's
-public path (i.e. the path part trailing C<http://example.com/myapp> then you
-will need to use L<Catalyst::Plugin::SubRequest> directly, and not this
-component.
+sub-include plugin you might want to implement.
 
 =head1 STASH FUNCTIONS
 
