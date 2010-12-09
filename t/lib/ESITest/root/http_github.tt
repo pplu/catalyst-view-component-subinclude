@@ -1,1 +1,1 @@
-[% subinclude('/github/wreis') %]
+[% subinclude_using('HTTP::GET', '/github/wreis') %]

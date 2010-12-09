@@ -1,1 +1,1 @@
-[% subinclude('/cpan/wreis') %]
+[% subinclude_using('HTTP::GET', '/cpan/wreis') %]

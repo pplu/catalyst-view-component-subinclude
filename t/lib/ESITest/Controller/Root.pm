@@ -6,12 +6,6 @@ use base 'Catalyst::Controller';
 
 __PACKAGE__->config->{namespace} = '';
 
-sub auto : Private {
-    my ( $self, $c ) = @_;
-    $c->stash->{'current_view'} = 'TT';
-    return 1;
-}
-
 sub index :Path Args(0) {}
 
 sub base : Chained('/') PathPart('') CaptureArgs(0) {}
@@ -108,13 +102,9 @@ sub time_args_no_chained : Path('time_args_no_chained') Args {
     $c->stash->{template} = 'time_include.tt';
 }
 
-sub http : Chained('base') PathPart('') CaptureArgs(0) {
-    pop->stash->{'current_view'} = 'TTWithHTTP';
-}
+sub http_cpan : Chained('base') Args(0) {}
 
-sub http_cpan : Chained('http') Args(0) {}
-
-sub http_github : Chained('http') Args(0) {}
+sub http_github : Chained('base') Args(0) {}
 
 sub end : ActionClass('RenderView') {}
 
