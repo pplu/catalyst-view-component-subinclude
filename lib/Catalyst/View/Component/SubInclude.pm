@@ -19,7 +19,7 @@ Version 0.09
 
 =cut
 
-our $VERSION = '0.09';
+our $VERSION = '0.10';
 $VERSION = eval $VERSION;
 
 =head1 SYNOPSIS
@@ -168,8 +168,6 @@ has _subinclude_plugin_class_instance_cache => (
 sub _subinclude_plugin_class_instance {
     my ($self, $plugin) = @_;
 
-    my $class = $plugin =~ /::/ ? $plugin : __PACKAGE__ . '::' . $plugin;
-
     my $cache = $self->_subinclude_plugin_class_instance_cache;
     return $cache->{$plugin} if exists $cache->{$plugin};
 
@@ -177,10 +175,16 @@ sub _subinclude_plugin_class_instance {
         $self->subinclude->{ALL}||{},
         $self->subinclude->{$plugin}||{}
     );
+    my $short_class = $plugin_config->{'class'} ?
+        delete $plugin_config->{'class'}
+        : $plugin;
+    my $class = $short_class =~ /::/ ?
+        $short_class
+        : __PACKAGE__ . '::' . $short_class;
 
     Class::MOP::load_class($class);
 
-    return $cache->{$plugin} = $class->new($plugin_config);
+    return $cache->{$class} = $class->new($plugin_config);
 }
 
 =head1 SEE ALSO
