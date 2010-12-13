@@ -2,6 +2,7 @@ package Catalyst::View::Component::SubInclude::HTTP;
 
 use Moose;
 use namespace::clean -except => 'meta';
+use Moose::Util::TypeConstraints;
 use LWP::UserAgent;
 use List::MoreUtils 'firstval';
 use URI;
@@ -17,7 +18,7 @@ has ua_timeout => (
     isa => 'Int', is => 'ro', default => 10,
 );
 
-has base_uri => (
+has base_url => (
     isa => 'Str', is => 'ro', required => 0,
 );
 
@@ -26,7 +27,8 @@ has uri_map => (
 );
 
 has user_agent => (
-    is => 'ro', lazy => 1, builder => '_build_user_agent',
+    isa => duck_type([qw/get post/]), is => 'ro',
+    lazy => 1, builder => '_build_user_agent',
 );
 
 sub _build_user_agent {
@@ -40,11 +42,11 @@ sub _build_user_agent {
 sub generate_subinclude {
     my ($self, $c, $path, $args) = @_;
     my $error_msg_prefix = "SubInclude for $path failed: ";
-    my $base_uri = $self->base_uri || $c->req->base;
-    my $uri_map = $self->uri_map || { q{/} => $base_uri };
-    $base_uri = $uri_map->{ firstval { $path =~ s/^$_// } keys %$uri_map };
-    $base_uri =~ s{/$}{};
-    my $uri = URI->new(join(q{/}, $base_uri, $path));
+    my $base_url = $self->base_url || $c->req->base;
+    my $uri_map = $self->uri_map || { q{/} => $base_url };
+    $base_url = $uri_map->{ firstval { $path =~ s/^$_// } keys %$uri_map };
+    $base_url =~ s{/$}{};
+    my $uri = URI->new(join(q{/}, $base_url, $path));
     my $req_method = q{_} . lc $self->http_method . '_request';
 
     my $response;
@@ -155,7 +157,7 @@ User Agent's timeout config param. Defaults to 10 seconds.
 
 This expects a HashRef in order to map paths to different URLs.
 
-=item base_uri
+=item base_url
 
 Used only if C<uri_map> is C<undef> and defaults to C<< $c->request->base >>.
 
