@@ -19,7 +19,7 @@ Version 0.09
 
 =cut
 
-our $VERSION = '0.09';
+our $VERSION = '0.10';
 $VERSION = eval $VERSION;
 
 =head1 SYNOPSIS
@@ -49,11 +49,7 @@ in your page.
 
 It's built in an extensible way so that you're free to use sub-requests,
 Varnish ESI (L<http://www.catalystframework.org/calendar/2008/17>) or any other
-sub-include plugin you might want to implement. An LWP plugin seems useful and
-might be developed in the future. If you need to address a resource by it's
-public path (i.e. the path part trailing C<http://example.com/myapp> then you
-will need to use L<Catalyst::Plugin::SubRequest> directly, and not this
-component.
+sub-include plugin you might want to implement.
 
 =head1 STASH FUNCTIONS
 
@@ -168,8 +164,6 @@ has _subinclude_plugin_class_instance_cache => (
 sub _subinclude_plugin_class_instance {
     my ($self, $plugin) = @_;
 
-    my $class = $plugin =~ /::/ ? $plugin : __PACKAGE__ . '::' . $plugin;
-
     my $cache = $self->_subinclude_plugin_class_instance_cache;
     return $cache->{$plugin} if exists $cache->{$plugin};
 
@@ -177,10 +171,16 @@ sub _subinclude_plugin_class_instance {
         $self->subinclude->{ALL}||{},
         $self->subinclude->{$plugin}||{}
     );
+    my $short_class = $plugin_config->{'class'} ?
+        delete $plugin_config->{'class'}
+        : $plugin;
+    my $class = $short_class =~ /::/ ?
+        $short_class
+        : __PACKAGE__ . '::' . $short_class;
 
     Class::MOP::load_class($class);
 
-    return $cache->{$plugin} = $class->new($plugin_config);
+    return $cache->{$class} = $class->new($plugin_config);
 }
 
 =head1 SEE ALSO
@@ -204,6 +204,10 @@ Nilson Santos Figueiredo Junior, C<< <nilsonsfj at cpan.org> >>
 =head1 CONTRIBUTORS
 
 Tomas Doran (t0m) C<< <bobtfish@bobtfish.net >>.
+
+Vladimir Timofeev, C<< <vovkasm at gmail.com> >>.
+
+Wallace Reis (wreis) C<< <wreis@cpan.org> >>.
 
 =head1 SPONSORSHIP
 
