@@ -15,7 +15,7 @@ Catalyst::View::Component::SubInclude - Use subincludes in your Catalyst views
 
 =head1 VERSION
 
-Version 0.09
+Version 0.10
 
 =cut
 
