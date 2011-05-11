@@ -77,7 +77,7 @@ has keep_stash => (
 
 sub generate_subinclude {
     my ($self, $c, $path, @params) = @_;
-    my $stash = $self->keep_stash ? { %{ $c->stash } } : {};
+    my $stash = $self->keep_stash ? $c->stash : {};
 
     croak "subincludes through subrequests require Catalyst::Plugin::SubRequest"
         unless $c->can('sub_request');
