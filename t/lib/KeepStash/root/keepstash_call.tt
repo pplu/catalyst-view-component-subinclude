@@ -1,0 +1,3 @@
+Shallow value: [% stash_value %]
+Deep Value: [% deep.stash_value %]
+New Value: [% new_value; c.stash.new_value = 'new' %]

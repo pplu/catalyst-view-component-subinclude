@@ -1,0 +1,7 @@
+-------ROOT------------
+Shallow value: [% stash_value %]
+Deep Value: [% deep.stash_value %]
+-------1st-------------
+[% subinclude_using('SubRequest', '/keepstash_call') %]
+-------2nd-------------
+[% subinclude_using('SubRequest', '/keepstash_call') %]
