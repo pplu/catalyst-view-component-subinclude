@@ -81,11 +81,25 @@ By default, the C<SubRequest> plugin will be used. This can be changed in the
 view's configuration options (either in the config file or in the view module
 itself).
 
-Configuration file example:
+    __PACKAGE__->config(
+        subinclude_plugin => 'ESI',
+        subinclude => {
+            'SubRequest' => {
+                keep_stash => 1,
+            },
+            'HTTP::POST' => {
+                class => 'HTTP',
+                http_method => 'POST',
+                ua_timeout => '10',
+                uri_map => {
+                    '/foo/' => 'http://www.foo.com/',
+                },
+            },
+        },
+    );
 
-  <View::TT>
-      subinclude_plugin   ESI
-  </View::TT>
+You can change each plugins' configuration through the keys in the 'subinclude'
+config key (example above)
 
 =head2 C<set_subinclude_plugin( $plugin )>
 

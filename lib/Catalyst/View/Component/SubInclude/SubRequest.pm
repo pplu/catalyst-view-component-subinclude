@@ -63,9 +63,28 @@ So, after path translation, the call will be (roughly) equivalent to:
 
   $c->sub_request( $translated_path, {}, @args );
 
-Notice that the stash will always be empty. This behavior could be configurable
-in the future through an additional switch - for now, this behavior guarantees a
-common interface for all plugins.
+Notice that the stash will be empty by default. This behavior is configurable
+(see below).
+
+=head1 CONFIGURATION
+
+=head2 keep_stash
+
+You can choose to not localize the stash for SubRequests' subinclude calls. The subrequest
+will have the same stash as the request that spawned it. Configure the keep_stash key
+in your view:
+
+    __PACKAGE__->config(
+        subinclude => {
+            'SubRequest' => {
+                keep_stash => 1,
+            },
+        }
+    );
+
+Note: the stash that the subrequest recieves is a shallow copy of the original stash. That
+means that changes to values of keys on the first level of the stash will be lost when the
+subrequest call returns. Don't count on this behaviour, as it may change in the future.
 
 =cut
 

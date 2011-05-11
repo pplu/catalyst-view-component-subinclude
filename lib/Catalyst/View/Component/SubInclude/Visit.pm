@@ -52,6 +52,25 @@ But it will handle all the nasty details such as localizing the stash,
 parameters and response body. This is necessary to keep behavior consistent 
 with the other plugins.
 
+=head1 CONFIGURATION
+
+=head2 keep_stash
+
+You can choose to not localize the stash for Visits' subinclude calls. The subrequest
+will have the same stash as the request that spawned it. Configure the keep_stash key
+in your view:
+
+    __PACKAGE__->config(
+        subinclude => {
+            'Visit' => {
+                keep_stash => 1,
+            },
+        }
+    );
+
+Note: changes in the stash during a Visit subinclude will be visible after the include 
+returns.
+
 =cut
 
 has keep_stash => (
