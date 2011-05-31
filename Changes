@@ -1,5 +1,8 @@
 Revision history for Catalyst-View-Component-SubInclude
 
+0.11  Tue 31 May 20:11:00 2010
+      - Document and test the keep-stash option (Jose Luis Martinez)
+
 0.10  Tue 14 Dec 14:32:00 2010
       - Add HTTP support (Wallace Reis)
 

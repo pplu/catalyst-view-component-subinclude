@@ -223,6 +223,8 @@ Vladimir Timofeev, C<< <vovkasm at gmail.com> >>.
 
 Wallace Reis (wreis) C<< <wreis@cpan.org> >>.
 
+Jose Luis Martinez (JLMARTIN) C<< <jlmartinez@capside.com> >>.
+
 =head1 SPONSORSHIP
 
 Development sponsored by Ionzero LLC L<http://www.ionzero.com/>.
